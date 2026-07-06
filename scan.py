@@ -358,11 +358,16 @@ rows.forEach(r=>tb.appendChild(r));}});
                     for k, v in j.items() if k != "description"} for j in jobs], f, indent=1)
 
 def send_email(jobs):
-    addr = os.environ.get("GMAIL_ADDRESS")
-    pw = os.environ.get("GMAIL_APP_PASSWORD")
+    # Works with Gmail (GMAIL_ADDRESS/GMAIL_APP_PASSWORD) or any SMTP service
+    # like Brevo (SMTP_HOST/SMTP_PORT/SMTP_USER/SMTP_PASSWORD/EMAIL_FROM).
+    host = os.environ.get("SMTP_HOST", "smtp.gmail.com")
+    port = int(os.environ.get("SMTP_PORT", "465"))
+    user = os.environ.get("SMTP_USER") or os.environ.get("GMAIL_ADDRESS")
+    pw = os.environ.get("SMTP_PASSWORD") or os.environ.get("GMAIL_APP_PASSWORD")
+    addr = os.environ.get("EMAIL_FROM") or os.environ.get("GMAIL_ADDRESS") or user
     to = os.environ.get("EMAIL_TO") or CFG["email"]["to"]
-    if not (addr and pw):
-        print("Email skipped: GMAIL_ADDRESS / GMAIL_APP_PASSWORD not set.")
+    if not (user and pw):
+        print("Email skipped: no SMTP credentials set.")
         return
     top = jobs[:CFG["email"].get("max_jobs_in_email", 40)]
     rows = "".join(
@@ -386,8 +391,13 @@ signals in the posting — not a real probability.</p></body></html>"""
     msg["Subject"] = f"{CFG['email'].get('subject_prefix','[Job Scan]')} {len(jobs)} new roles — {NOW.strftime('%b %d')}"
     msg["From"], msg["To"] = addr, to
     msg.attach(MIMEText(body, "html"))
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=30) as s:
-        s.login(addr, pw)
+    if port == 465:
+        server = smtplib.SMTP_SSL(host, port, timeout=30)
+    else:
+        server = smtplib.SMTP(host, port, timeout=30)
+        server.starttls()
+    with server as s:
+        s.login(user, pw)
         s.sendmail(addr, [to], msg.as_string())
     print(f"Email sent to {to} ({len(top)} jobs).")
 
