@@ -1,0 +1,39 @@
+name: Daily job scan
+
+on:
+  schedule:
+    - cron: "0 12 * * *"   # 8:00 AM US Eastern (EDT). In winter (EST) this fires at 7 AM;
+                            # change to "0 13 * * *" each November if you care.
+  workflow_dispatch: {}     # lets you run it anytime with one click from your phone/browser
+
+permissions:
+  contents: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install -r requirements.txt
+
+      - name: Run scanner
+        env:
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
+          ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+          PAGES_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
+        run: python scan.py
+
+      - name: Commit report + state
+        run: |
+          git config user.name "job-scanner-bot"
+          git config user.email "actions@github.com"
+          git add docs/ data/
+          git diff --cached --quiet || git commit -m "Daily scan $(date -u +%F)"
+          git push
