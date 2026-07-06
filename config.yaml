@@ -12,15 +12,11 @@ include_keywords:
   - bare metal
   - bare-metal
   - robotics
-  - perception
-  - autonomy
-  - sensor fusion
   - device driver
   - electronic engineer
   - electronics engineer
   - hardware engineer
-  - fpga
-
+  
 # Jobs whose TITLE matches any of these are dropped.
 exclude_title_keywords:
   - director
@@ -96,6 +92,6 @@ ashby_boards:
 
 # ---- Email ----
 email:
-  to: roopesh.billa@gmail.com
-  subject_prefix: "[Job Scan]"
+  to: roopeshbrlearning@gmail.com
+  subject_prefix: "[JobScan]"
   max_jobs_in_email: 40
