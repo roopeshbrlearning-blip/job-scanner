@@ -6,20 +6,52 @@ lookback_hours: 26
 # A job must match at least one of these (title or description) to be considered relevant.
 include_keywords:
   - embedded
+  - qnx
+  - autosar
+  - automotive software
+  - adas
+  - uds
+  - embedded linux
+  - kernel driver
   - firmware
   - rtos
   - microcontroller
   - bare metal
   - bare-metal
   - robotics
+  - perception
+  - autonomy
+  - sensor fusion
   - device driver
   - electronic engineer
   - electronics engineer
   - hardware engineer
-  
+  - fpga
+
+# The job TITLE must contain at least one of these words (keeps only real
+# development roles, drops recruiting/managerial/ops jobs whose descriptions
+# merely mention embedded/robotics). Remove all lines to disable.
+title_must_contain:
+  - engineer
+  - developer
+  - programmer
+  - firmware
+  - embedded
+  - robotics
+  - software
+
 # Jobs whose TITLE matches any of these are dropped.
 exclude_title_keywords:
   - director
+  - manager
+  - recruit
+  - talent
+  - people
+  - human resources
+  - supervisor
+  - technician
+  - coordinator
+  - chief
   - vice president
   - " vp "
   - head of
@@ -77,15 +109,28 @@ greenhouse_boards:
   - relativity
   - muonspace
   - vardaspace
+  # automotive / AV / EV
+  - lucidmotors
+  - scoutmotors
+  - harbingermotors
+  - chargepoint
+  - wayve
+  - stackav
+  - tenstorrent
 
 lever_boards:
   - zoox
+  - waabi
+  - woven-by-toyota
+  - aeva
   - mashgin
   - veo
 
 # ashby: jobs.ashbyhq.com/<TOKEN>
 ashby_boards:
   - skydio
+  - oxa
+  - slate
   - 1x
   - saronic
   - verkada
@@ -93,5 +138,5 @@ ashby_boards:
 # ---- Email ----
 email:
   to: roopeshbrlearning@gmail.com
-  subject_prefix: "[JobScan]"
+  subject_prefix: "[Job Scan]"
   max_jobs_in_email: 40
