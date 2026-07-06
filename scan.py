@@ -363,6 +363,30 @@ rows.forEach(r=>tb.appendChild(r));}});
                     for k, v in j.items() if k != "description"} for j in jobs], f, indent=1)
 
 
+def airtable_existing(url, hdr):
+    """Fetch existing rows so we never insert a job that's already tracked."""
+    keys = set()
+    offset = None
+    while True:
+        params = {"pageSize": 100, "fields[]": ["Source Link", "Company", "Role Title"]}
+        if offset:
+            params["offset"] = offset
+        r = requests.get(url, headers=hdr, params=params, timeout=30)
+        if r.status_code != 200:
+            print(f"Airtable read error {r.status_code}; skipping dedupe this run.")
+            return keys
+        d = r.json()
+        for rec in d.get("records", []):
+            f = rec.get("fields", {})
+            if f.get("Source Link"):
+                keys.add(f["Source Link"].strip().lower().rstrip("/"))
+            if f.get("Company") and f.get("Role Title"):
+                keys.add((f["Company"].strip().lower(), f["Role Title"].strip().lower()))
+        offset = d.get("offset")
+        if not offset:
+            return keys
+
+
 def sync_airtable(jobs):
     token = os.environ.get("AIRTABLE_TOKEN")
     at = CFG.get("airtable", {})
@@ -372,6 +396,13 @@ def sync_airtable(jobs):
         return
     url = f"https://api.airtable.com/v0/{at['base_id']}/{at['table']}"
     hdr = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
+    existing = airtable_existing(url, hdr)
+    before = len(jobs)
+    jobs = [j for j in jobs
+            if j["url"].strip().lower().rstrip("/") not in existing
+            and (j["company"].strip().lower(), j["title"].strip().lower()) not in existing]
+    if before - len(jobs):
+        print(f"Airtable: {before - len(jobs)} already tracked, skipping those.")
     sent = 0
     for i in range(0, len(jobs), 10):
         recs = [{"fields": {
