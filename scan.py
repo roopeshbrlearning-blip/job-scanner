@@ -237,6 +237,9 @@ def relevant(j):
     tl, dl = j["title"].lower(), j["description"].lower()
     if any(x in tl for x in CFG.get("exclude_title_keywords", [])):
         return False
+    must = CFG.get("title_must_contain", [])
+    if must and not any(k in tl for k in must):
+        return False
     return any(k in tl or k in dl for k in CFG.get("include_keywords", []))
 
 def kw_pattern(kw):
@@ -265,8 +268,10 @@ def score(j):
     years = PROFILE.get("years_experience", 3)
     chance = fit
     reasons = []
-    if re.search(r"\b(senior|staff|principal|lead)\b", tl) and years < 7:
-        chance -= 25; reasons.append("senior-level title")
+    if re.search(r"\b(staff|principal)\b", tl) and years < 8:
+        chance -= 25; reasons.append("staff/principal-level title")
+    elif re.search(r"\b(senior|lead)\b", tl) and years < 4:
+        chance -= 15; reasons.append("senior-level title")
     m = re.search(r"(\d{1,2})\s*\+?\s*(?:or more\s*)?years", dl)
     if m and int(m.group(1)) > years:
         gap = int(m.group(1)) - years
@@ -356,6 +361,40 @@ rows.forEach(r=>tb.appendChild(r));}});
     with open(os.path.join(ROOT, "data", "latest.json"), "w", encoding="utf-8") as f:
         json.dump([{k: (v.isoformat() if isinstance(v, datetime) else v)
                     for k, v in j.items() if k != "description"} for j in jobs], f, indent=1)
+
+
+def sync_airtable(jobs):
+    token = os.environ.get("AIRTABLE_TOKEN")
+    at = CFG.get("airtable", {})
+    if not (token and at.get("enabled") and jobs):
+        if not token:
+            print("Airtable skipped: AIRTABLE_TOKEN not set.")
+        return
+    url = f"https://api.airtable.com/v0/{at['base_id']}/{at['table']}"
+    hdr = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
+    sent = 0
+    for i in range(0, len(jobs), 10):
+        recs = [{"fields": {
+            "Role Title": j["title"][:255],
+            "Company": j["company"][:255],
+            "Date Found": NOW.strftime("%Y-%m-%d"),
+            "Location": j["location"][:255],
+            "Source Link": j["url"],
+            "Fit %": j["fit"],
+            "Chance %": j["chance"],
+            "Status": at.get("new_status", "New"),
+            "Notes": (f"rank {j['rank']} | source: {j['source']}"
+                      + (f" | {j['notes']}" if j['notes'] else "")),
+        }} for j in jobs[i:i+10]]
+        try:
+            r = requests.post(url, headers=hdr, json={"records": recs, "typecast": True}, timeout=30)
+            if r.status_code == 200:
+                sent += len(recs)
+            else:
+                print(f"Airtable error {r.status_code}: {r.text[:200]}")
+        except requests.RequestException as e:
+            print(f"Airtable error: {e}")
+    print(f"Airtable: {sent} records added.")
 
 def send_email(jobs):
     # Works with Gmail (GMAIL_ADDRESS/GMAIL_APP_PASSWORD) or any SMTP service
@@ -448,6 +487,11 @@ def main():
     write_report(new, stats)
     print(f"\n{len(new)} new matches -> docs/index.html")
 
+    if new:
+        try:
+            sync_airtable(new)
+        except Exception as e:
+            print(f"Airtable failed: {e}")
     if new and not no_email:
         try:
             send_email(new)
