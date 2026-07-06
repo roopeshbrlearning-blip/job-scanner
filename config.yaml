@@ -140,3 +140,10 @@ email:
   to: roopeshbrlearning@gmail.com
   subject_prefix: "[Job Scan]"
   max_jobs_in_email: 40
+
+# ---- Airtable sync (needs AIRTABLE_TOKEN secret) ----
+airtable:
+  enabled: true
+  base_id: app63mBIMdiFaIGz1     # Job Application Tracker
+  table: Applications
+  new_status: New
