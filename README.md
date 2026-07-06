@@ -29,7 +29,7 @@ Repo → Settings → Secrets and variables → **Actions** → New repository s
 
 | Secret name | Value |
 |---|---|
-| `GMAIL_ADDRESS` | roopesh.billa@gmail.com |
+| `GMAIL_ADDRESS` | roopeshbrlearning@gmail.com |
 | `GMAIL_APP_PASSWORD` | the 16-char app password |
 | `ADZUNA_APP_ID` | (optional) from https://developer.adzuna.com — free, adds Indeed-style aggregate coverage |
 | `ADZUNA_APP_KEY` | (optional) |
