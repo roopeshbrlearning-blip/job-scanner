@@ -3,7 +3,7 @@
 # Built from your Indeed profile; UPDATE the placeholders after adding resume details.
 
 name: Roopesh
-email: roopesh.billa@gmail.com
+email: roopeshbrlearning@gmail.com
 
 # Total years of relevant engineering experience (used for seniority-mismatch penalties)
 years_experience: 3          # <-- UPDATE ME from your resume
@@ -20,7 +20,6 @@ target_titles:
   - firmware engineer
   - embedded systems engineer
   - robotics software engineer
-  - perception engineer
   - electronic engineer
   - electrical engineer
   - software engineer embedded
