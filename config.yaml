@@ -146,4 +146,4 @@ airtable:
   enabled: true
   base_id: app63mBIMdiFaIGz1     # Job Application Tracker
   table: Applications
-  new_status: New
+  new_status: Found
