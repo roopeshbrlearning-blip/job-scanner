@@ -1,0 +1,62 @@
+# ===== YOUR MATCH PROFILE =====
+# The scoring engine ranks jobs against this file.
+# Built from your Indeed profile; UPDATE the placeholders after adding resume details.
+
+name: Roopesh
+email: roopesh.billa@gmail.com
+
+# Total years of relevant engineering experience (used for seniority-mismatch penalties)
+years_experience: 3          # <-- UPDATE ME from your resume
+
+education: "BE Electronics, Don Bosco Institute of Engineering"
+has_security_clearance: false
+min_salary: 100000
+willing_to_relocate: true
+wants_remote: true
+
+# Job titles you're targeting, in priority order
+target_titles:
+  - embedded software engineer
+  - firmware engineer
+  - embedded systems engineer
+  - robotics software engineer
+  - perception engineer
+  - electronic engineer
+  - electrical engineer
+  - software engineer embedded
+
+# Skills with weights 1-5 (5 = core strength). The scanner counts these
+# in job titles/descriptions to compute your fit score.
+skills:
+  c: 5
+  c++: 5
+  python: 5
+  matlab: 4
+  embedded: 5
+  firmware: 5
+  rtos: 4
+  freertos: 4
+  microcontroller: 4
+  bare-metal: 4
+  arm: 3
+  stm32: 3
+  i2c: 3
+  spi: 3
+  uart: 3
+  can bus: 3
+  device driver: 4
+  bootloader: 3
+  robotics: 4
+  ros: 3
+  perception: 4
+  sensor fusion: 4
+  computer vision: 3
+  opencv: 3
+  lidar: 3
+  fpga: 2
+  verilog: 2
+  pcb: 2
+  linux: 3
+  git: 2
+  jtag: 2
+  oscilloscope: 2

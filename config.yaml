@@ -1,0 +1,101 @@
+# ===== SCANNER CONFIGURATION =====
+
+# How far back to look (hours). 26 gives buffer over "last 24h" so nothing slips between runs.
+lookback_hours: 26
+
+# A job must match at least one of these (title or description) to be considered relevant.
+include_keywords:
+  - embedded
+  - firmware
+  - rtos
+  - microcontroller
+  - bare metal
+  - bare-metal
+  - robotics
+  - perception
+  - autonomy
+  - sensor fusion
+  - device driver
+  - electronic engineer
+  - electronics engineer
+  - hardware engineer
+  - fpga
+
+# Jobs whose TITLE matches any of these are dropped.
+exclude_title_keywords:
+  - director
+  - vice president
+  - " vp "
+  - head of
+  - recruiter
+  - sales
+  - marketing
+  - account executive
+  - engineering manager
+  - product manager
+  - intern            # remove this line if you want internships
+
+# ---- Free public APIs (no key needed) ----
+free_apis:
+  remoteok: true
+  remotive: true
+  arbeitnow: true
+  himalayas: true
+  weworkremotely: true
+
+# Remotive is search-based; these queries are run against it
+remotive_searches: ["embedded", "firmware", "robotics"]
+
+# ---- Adzuna (optional, free key: https://developer.adzuna.com) ----
+adzuna:
+  enabled: true            # runs only if ADZUNA_APP_ID / ADZUNA_APP_KEY secrets are set
+  country: us
+  queries: ["embedded software engineer", "firmware engineer", "robotics software engineer"]
+
+# ---- Direct company ATS boards (closest thing to "every company's portal") ----
+# Unknown/renamed board tokens 404 and are skipped silently — safe to guess.
+# ADD MORE COMPANIES ANYTIME: find token in the company careers URL
+#   greenhouse: boards.greenhouse.io/<TOKEN>   |   lever: jobs.lever.co/<TOKEN>
+greenhouse_boards:
+  - andurilindustries
+  - nuro
+  - spacex
+  - waymo
+  - aurorainnovation
+  - motional
+  - kodiak
+  - flyzipline
+  - formlabs
+  - markforged
+  - agilityrobotics
+  - apptronik
+  - figureai
+  - outrider
+  - thirdwaveautomation
+  - maymobility
+  - torcrobotics
+  - peloton
+  - samsara
+  - neuralink
+  - astranis
+  - relativity
+  - muonspace
+  - vardaspace
+
+lever_boards:
+  - zoox
+  - mashgin
+  - veo
+
+# ashby: jobs.ashbyhq.com/<TOKEN>
+ashby_boards:
+  - skydio
+  - 1x
+  - saronic
+  - verkada
+
+# ---- Email ----
+email:
+  to: roopesh.billa@gmail.com
+  subject_prefix: "[Job Scan]"
+  max_jobs_in_email: 40
