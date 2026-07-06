@@ -1,7 +1,9 @@
-name: Roopesh
+# ===== MATCH PROFILE — built from roopesh_embedded.pdf =====
+name: Roopesh Bangalore Ravishankar
 email: roopeshbrlearning@gmail.com
-years_experience: 3          # update from your resume
-education: "BE Electronics, Don Bosco Institute of Engineering"
+
+years_experience: 4        # Bosch 2018-2020 + GM 2024-present
+education: "MEng Computer Science, Oregon State (2023); BE Electronics & Communication, VTU (2017)"
 has_security_clearance: false
 min_salary: 100000
 willing_to_relocate: true
@@ -11,42 +13,65 @@ target_titles:
   - embedded software engineer
   - firmware engineer
   - embedded systems engineer
+  - automotive software engineer
   - robotics software engineer
   - perception engineer
-  - electronic engineer
-  - electrical engineer
   - software engineer embedded
+  - embedded linux engineer
 
+# Weights 1-5 (5 = core strength, directly from resume)
 skills:
   c: 5
   c++: 5
-  python: 5
+  python: 4
   matlab: 4
+  simulink: 4
   embedded: 5
   firmware: 5
-  rtos: 4
-  freertos: 4
+  rtos: 5
+  qnx: 5
+  embedded linux: 4
+  autosar: 4
+  automotive: 4
+  i2c: 5
+  spi: 4
+  uart: 4
+  can: 4
+  uds: 4
+  ipc: 4
+  multithread: 4
+  device driver: 5
+  kernel: 4
+  device tree: 3
   microcontroller: 4
-  bare-metal: 4
-  arm: 3
-  stm32: 3
-  i2c: 3
-  spi: 3
-  uart: 3
-  can bus: 3
-  device driver: 4
+  stm32: 4
+  arm: 4
+  cortex: 3
+  bare-metal: 3
   bootloader: 3
-  robotics: 4
-  ros: 3
-  perception: 4
-  sensor fusion: 4
-  computer vision: 3
-  opencv: 3
-  lidar: 3
-  fpga: 2
-  verilog: 2
-  pcb: 2
-  linux: 3
+  interrupt: 3
+  serdes: 3
+  lvds: 2
+  diagnostics: 3
+  misra: 3
+  polyspace: 2
+  cmake: 3
+  gtest: 3
+  trace32: 2
+  canalyzer: 2
   git: 2
-  jtag: 2
-  oscilloscope: 2
+  ci/cd: 2
+  robotics: 4
+  ros: 4
+  ros2: 4
+  jetson: 4
+  tensorrt: 3
+  cuda: 3
+  pytorch: 2
+  opencv: 3
+  gstreamer: 2
+  computer vision: 3
+  perception: 4
+  sensor fusion: 3
+  yolo: 2
+  freertos: 2
