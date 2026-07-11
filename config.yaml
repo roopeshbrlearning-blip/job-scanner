@@ -19,14 +19,9 @@ include_keywords:
   - bare metal
   - bare-metal
   - robotics
-  - perception
-  - autonomy
-  - sensor fusion
   - device driver
   - electronic engineer
   - electronics engineer
-  - hardware engineer
-  - fpga
 
 # The job TITLE must contain at least one of these words (keeps only real
 # development roles, drops recruiting/managerial/ops jobs whose descriptions
